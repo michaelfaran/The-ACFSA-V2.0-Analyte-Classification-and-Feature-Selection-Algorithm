@@ -1,0 +1,14 @@
+ACFSA V2.0 run summary
+Config: Config ACFSA V2 Run_I_Nbuff_SFS_QDA
+
+Interpretation: Two working points are shown as vertical lines in Config ACFSA V2 Run_I_Nbuff_SFS_QDA_Summary_Fig.png (dashed = WP1, solid = WP2).
+
+[WP1 – Alternative] lambda_1 = 0.500%
+  Minimal sensor set size: 2
+  Mean classification error at WP1: 0.0645%
+  Remaining sensors (2): (6,5)_NOX_SWCNT-Gly, (6,5)_OX_SWCNT-Gly
+
+[WP2 – Default]     lambda_2 = 3.000%
+  Minimal sensor set size: 1
+  Mean classification error at WP2: 2.1347%
+  Remaining sensors (1): (6,5)_NOX_SWCNT-Gly
