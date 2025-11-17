@@ -1,6 +1,6 @@
-<p align="center">
-  <img src="TOC_Image.png" >
-</p>
+&lt;p align="center"&gt;
+  &lt;img src="TOC_Image.png" &gt;
+&lt;/p&gt;
 
 ## About:
 This repository contains the code framework for ACFSA V2.0: Analyte Classification and Feature Selection Algorithm.
@@ -52,10 +52,10 @@ The code will be continually updated upon request.
 6. Click "Next: Configure & RUN ACFSA V2.0 ". 
 7. Fill up the different fields according to Configure & Run inputs below, activate as default, and check [1] for more details.
 8. Click "Run ACFSA"-All other figures will be closed now, including the GUI activation window, and the algorithm will run. Do not press newly created figures when MATLAB runs, as it might distort the activation output figures. 
-9. Enjoy the new selected minimal sensor data set, appearing in the repo/results/<CONFIG> folder name (see "output.txt" for main output and others in "supporting output")
+9. Enjoy the new selected minimal sensor data set, appearing in the repo/results/CONFIG folder name (see "output.txt" for main output and others in "supporting output")
 
 ## Activation notes:
-1. We suggest first activate the ACFSA V2.0 on the default dataset found in "[Repo local address]/Open Source/examples/measurement_data_default_data_set.xlsx". If any errors occur during this run, please get in touch with michaelfaran [at]gmail.com for assistance.
+1. We suggest first activate the ACFSA V2.0 on the default dataset found in "[Repo local address]/Open Source/examples/measurement_data_default_data_set.xlsx". If any errors happen during this run, please reach out to michaelfaran [at] gmail.com for help.
 2. If you encounter an error during the run of your own data set, please see the current limitations of the scheme below. If this does not solve the issue, please contact michaelfaran[at]gmail.com for assistance.
 
 ## Scheme Current Limitations:
@@ -92,13 +92,13 @@ The code will be continually updated upon request.
 
 ### Output Token:
 This run saves results under:
-results/<CONFIG>/
-where <CONFIG> is constructed from your supertitle and the flags below.
+results/CONFIG/
+where CONFIG is constructed from your supertitle and the flags below.
 
 - inflateFlag (index 1): Inflate Gaussian STD for uncertainty  
 Token: _I (if 1), _NI (if 0)
 - artificialSTDmultiplier (index 2): Synthetic stress-test multiplier  
-Token: _Nbuff (if 0), otherwise _<val>_buff where <val> is formatted with %.15g and then “.” → “_”.  
+Token: _Nbuff (if 0), otherwise _&lt;val&gt;_buff where &lt;val&gt; is formatted with %.15g and then “.” → “_”.  
 Examples: 1.4 → _1_4_buff, 0.001 → _0_001_buff
 - classifierFlag (index 3): Decision boundaries  
 Token: _QDA (if 0), _Vor (if 1)
@@ -109,11 +109,11 @@ Token: (none) — affects plots/thresholds only
 - WP2_pct (index 6): Allowed classification error per sensor (%) — working point 2, this input defines the output PCA and decision lines last presented iteration.
 
 ### Outputs:
-1. The <CONFIG> folder name  
-<CONFIG> =
+1. The CONFIG folder name  
+CONFIG =
   "Config " + supertitle
   + Inflate_name          (% from inflateFlag → _I / _NI)
-  + Buff_name             (% from artificialSTDmultiplier → _Nbuff or _<val>_buff)
+  + Buff_name             (% from artificialSTDmultiplier → _Nbuff or _&lt;val&gt;_buff)
   + Stop_name             (% now empty string)
   + chi_name              (% from standardFSFlag → _WFS or _SFS)
   + chi_name2             (% now empty string)
@@ -121,16 +121,16 @@ Token: (none) — affects plots/thresholds only
 
    Example with (new) typical defaults  
    Assuming your GUI defaults are: inflateFlag=1, artificialSTDmultiplier=0, classifierFlag=0, standardFSFlag=0, WP1=3, WP2=0.5, and supertitle="ACFSA v2 Run"  
-   → <CONFIG> = Config ACFSA v2 Run_I_Nbuff_WFS_QDA
+   → *CONFIG = Config ACFSA v2 Run_I_Nbuff_WFS_QDA*
 
-2. Files created inside results/<CONFIG>/  
-(Replace <CONFIG> below with the actual string.)
+2. Files created inside results/CONFIG/  
+(Replace CONFIG below with the actual string.)
 
 #### Main Output
-The minimal sensor set for each working point, with its corresponding mean classification error is printed in "output.txt".  
+The minimal sensor set for each working point, with its corresponding mean classification error, is printed in "output.txt".  
 Example for the default dataset:
 
-ACFSA V2.0 run summary  
+*ACFSA V2.0 run summary  
 Config: Config ACFSA v2 Run_I_Nbuff_SFS_QDA  
 Interpretation: Two working points are shown as vertical lines in Config ACFSA v2 Run_I_Nbuff_SFS_QDA_Summary_Fig.png (dashed = WP1, solid = WP2).  
 [WP1 – Alternative] lambda_1 = 0.500%  
@@ -140,25 +140,25 @@ Interpretation: Two working points are shown as vertical lines in Config ACFSA v
 [WP2 – Default]     lambda_2 = 3.000%  
   Minimal sensor set size: 1  
   Mean classification error at WP2: 2.1347%  
-  Remaining sensors (1): (6,5)_NOX_SWCNT-Gly
+  Remaining sensors (1): (6,5)_NOX_SWCNT-Gly*
 
 #### Supporting Output
-- <CONFIG>_Summary_Fig.(fig|png): This figure outputs the key results of the ACFSA v2 scheme. It shows the first iteration and default working-point results, PCA and decision-boundary plots, alongside the working-point selection panel. If the default working point (WP2) leaves only one sensor, the PCA and decision-boundary plots instead display the two-sensor case.
-- Surviving_Sensors_<CONFIG>_<N>.mat: This .mat file contains the data of per-iteration state:  
+- CONFIG_Summary_Fig.(fig|png): This figure outputs the key results of the ACFSA v2 scheme. It shows the first iteration and default working-point results, PCA and decision-boundary plots, alongside the working-point selection panel. If the default working point (WP2) leaves only one sensor, the PCA and decision-boundary plots instead display the two-sensor case.
+- Surviving_Sensors_CONFIG_&lt;N&gt;.mat: This .mat file contains the data of the per-iteration state:  
   - names_vec: The remaining sensor names.  
   - sensor_original_number_removed: The sensor number, out of the initial sensor number labels, that was eliminated during iteration N.  
   - ARI: The adjusted Rand index of the classifier versus the ground truth labels.  
   - updated_num_sensors: The current remaining number of sensors.
 
-- First_and_Last_Iterations_PCA.(fig|png): This figure shows the first-iteration and default working-point results of the PCA plot, where WP2 influence which N is shown.
-- <Classifier>_Classifier_First_and_Last_Iteration.(fig|png): This figure shows the first-iteration and default working-point results of the decision lines plot, where WP2 influence which N is shown.  
-  <Classifier> is:  
+- First_and_Last_Iterations_PCA.(fig|png)This figure shows the first-iteration and default working-point results of the PCA plot, where WP2 influences which N is shown.
+- &lt;Classifier&gt;_Classifier_First_and_Last_Iteration.(fig|png)This figure shows the first-iteration and default working-point results of the decision lines plot, where WP2 influences which N is shown.  
+  &lt;Classifier&gt; is:  
   – QDA if classifierFlag = 0  
   – Vor if classifierFlag = 1
-- PCA of <CONFIG> <N> Sensors.(fig|png): This figure shows the PCA plot of iteration N during elimination, e.g., N = 2…#sensors.  
-- Surviving_Sensors_<N>_QDA_Classifier.(fig|png) if classifierFlag = 0: This figure shows the QDA classifier plot of iteration N during elimination.
-- Surviving_Sensors_<N>_Vor_Classifier.(fig|png) if classifierFlag = 1: This figure shows the Vor classifier plot of iteration N during elimination.
-- <supertitle>.mat: Run-level summary saved in results/<CONFIG>/. Contains:  
+- PCA of CONFIG &lt;N&gt; Sensors.(fig|png): This figure shows the PCA plot of iteration N during elimination, e.g., N = 2…#sensors.  
+- Surviving_Sensors_&lt;N&gt;_QDA_Classifier.(fig|png) if classifierFlag = 0: This figure shows the QDA classifier plot of iteration N during elimination.
+- Surviving_Sensors_&lt;N&gt;_Vor_Classifier.(fig|png) if classifierFlag = 1: This figure shows the Vor classifier plot of iteration N during elimination.
+- &lt;supertitle&gt;.mat: Run-level summary saved in results/CONFIG/. Contains:  
   - config: The full configuration tag used for this run’s results folder.  
   - all_sensors_length: Initial number of sensors at the start of the elimination loop, N.  
   - sensor_idx: Baseline index reference for the original sensor order, i.e., [1, 2, …, N]. Helpful in mapping any later indices back to the initial ordering.  
@@ -173,8 +173,6 @@ Interpretation: Two working points are shown as vertical lines in Config ACFSA v
     Notes: values reflect the decision rule in use (_QDA or _Vor) and the inflation/buffer settings; near-zero values indicate very low estimated error for that class at that step.  
   - supertitle: The dataset/run title you provided (also used as the .mat filename).  
 - eliminated_one.mat: cell array logging removed sensors in order.
-
-Refer to the upcoming paper for more details: "The ACFSA V2.0: Analyte Classification and Feature Selection Algorithm" by Michael Faran, Minyeong Yoon, Soo-Yeon Cho, and Gili Bisker [1].
 
 ## References:
 [1] Faran, Michael, et al. “The ACFSA V2.0: Analyte Classification and Feature Selection Algorithm.” Manuscript submitted (2025).  
