@@ -18,7 +18,7 @@ The paper introduces ACFSA V2.0 as a practical tool for experimental design, wit
 * **Platform-agnostic** – Works with any cross-reactive array and with both continuous and discrete readouts.
 * **No coding required** – GUI workflow: load data, set accuracy targets, and export publication-ready figures.
 
-Proven peformance:
+Proven performance:
 
 - **Builds on prior ACFSA** – Extends the original ACFSA framework [2].  
 - **Validated on multiple datasets** – Demonstrated on:  
@@ -64,7 +64,8 @@ The code will be continually updated upon request.
 3. The code assumes the input response is already after post-processing. That might mean different implications for different sensor sets. As an example, a SWCNT normalized fluorescence intensity response can be obtained by integrating the emission spectrum and normalizing by the integral measured at zero analyte concentration
 4. The code is limited to plotting a maximum of six analytes in the data set, due to graphical constraints. 
 5. Some graphical mismatches in the output files can arise due to long analyte names. 
-6. ACFSA V2.0 assumes that each analyte measurement is drawn from Gaussian statistics, and classification error is calculated accordingly. 
+6. ACFSA V2.0 assumes that each analyte measurement is drawn from Gaussian statistics, and classification error is calculated accordingly.
+7. Due to the '.' character usage limitation in MATLAB, figures with V2.0 are presented with V2 instead.
 
 ## User Inputs:
 
@@ -131,7 +132,7 @@ The minimal sensor set for each working point, with its corresponding mean class
 Example for the default dataset:
 
 *ACFSA V2.0 run summary  
-Config: Config ACFSA v2 Run_I_Nbuff_SFS_QDA  
+Config: Config ACFSA V2.0 Run_I_Nbuff_SFS_QDA  
 Interpretation: Two working points are shown as vertical lines in Config ACFSA v2 Run_I_Nbuff_SFS_QDA_Summary_Fig.png (dashed = WP1, solid = WP2).  
 [WP1 – Alternative] lambda_1 = 0.500%  
   Minimal sensor set size: 2  
@@ -150,8 +151,8 @@ Interpretation: Two working points are shown as vertical lines in Config ACFSA v
   - ARI: The adjusted Rand index of the classifier versus the ground truth labels.  
   - updated_num_sensors: The current remaining number of sensors.
 
-- First_and_Last_Iterations_PCA.(fig|png)This figure shows the first-iteration and default working-point results of the PCA plot, where WP2 influences which N is shown.
-- &lt;Classifier&gt;_Classifier_First_and_Last_Iteration.(fig|png)This figure shows the first-iteration and default working-point results of the decision lines plot, where WP2 influences which N is shown.  
+- First_and_Last_Iterations_PCA.(fig|png): This figure shows the first-iteration and default working-point results of the PCA plot, where WP2 influences which N is shown.
+- &lt;Classifier&gt;_Classifier_First_and_Last_Iteration.(fig|png): This figure shows the first-iteration and default working-point results of the decision lines plot, where WP2 influences which N is shown.  
   &lt;Classifier&gt; is:  
   – QDA if classifierFlag = 0  
   – Vor if classifierFlag = 1
