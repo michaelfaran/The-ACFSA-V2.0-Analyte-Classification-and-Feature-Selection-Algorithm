@@ -1,6 +1,6 @@
-&lt;p align="center"&gt;
-  &lt;img src="TOC_image.png" &gt;
-&lt;/p&gt;
+<p align="center">
+  <img src="TOC_image.png" >
+</p>
 
 ## About:
 This repository contains the code framework for ACFSA V2.0: Analyte Classification and Feature Selection Algorithm.
