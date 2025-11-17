@@ -179,10 +179,8 @@ Interpretation: Two working points are shown as vertical lines in Config ACFSA v
 [1] Faran, Michael, et al. “The ACFSA V2.0: Analyte Classification and Feature Selection Algorithm.” Manuscript submitted (2025).  
 [2] Petresky, Gabriel, et al. "Metal-Ion Optical Fingerprinting Sensor Selection via an Analyte Classification and Feature Selection Algorithm." Analytical Chemistry 97.16 (2025): 8821-8832.  
 [3] Lee, Yeon Soo, et al. "Spatiotemporal molecular tracing of ultralow-volume biofluids via a soft skin-adaptive optical monolithic patch sensor." Nature Communications 16.1 (2025): 3272.‏  
-[4] Yoon, Minyeong, et al. "Enzyme-free optical detection of uric acid using corona phase molecular recognition in near-infrared fluorescent single-walled carbon nanotubes." Nanoscale 17.17 (2025): 10652-10662.‏  
-
+[4] Yoon, Minyeong, et al. "Enzyme-free optical detection of uric acid using corona phase molecular recognition in near-infrared fluorescent single-walled carbon nanotubes." Nanoscale 17.17 (2025): 10652-10662.‏ 
 The code uses adjusted versions of the following MATLAB codes:  
-plot_elipse.m, taken from:  
 [5] https://www.mathworks.com/matlabcentral/fileexchange/116610-plot-ellipse-on-scattered-2d-data?s_tid=prof_contriblnk  
 [6] Ohad Gal (2025). fit_ellipse (https://www.mathworks.com/matlabcentral/fileexchange/3215-fit_ellipse), MATLAB Central File Exchange. Retrieved November 15, 2025.  
 [7] Jakob Sievers (2025). VoronoiLimit(varargin) (https://www.mathworks.com/matlabcentral/fileexchange/34428-voronoilimit-varargin), MATLAB Central File Exchange. Retrieved November 15, 2025.  
