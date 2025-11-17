@@ -7,7 +7,7 @@ This repository contains the code framework for ACFSA V2.0: Analyte Classificati
 
 It serves as an open source with a graphical user interface (GUI) for anyone interested in choosing a minimal sensor set out of analyte-sensor screening data, that preserves both accuracy and minimal sensor number- a key purpose in experiment design.
 
-The algorithm, with some key examples, appears in the upcoming paper  "The ACFSA V2.0: Analyte Classification and Feature Selection Algorithm" by Michael Faran, Minyeong Yoon, Soo-Yeon Cho, and Gili Bisker [1]. The paper is now under revision.
+The algorithm, with some key examples, appears in the upcoming paper  "The ACFSA V2.0: Analyte Classification and Feature Selection Algorithm" by Michael Faran, Minyeong Yoon, Gabriel Petresky, Soo-Yeon Cho, and Gili Bisker [1]. The paper is now under revision.
 
 The paper introduces ACFSA V2.0 as a practical tool for experimental design, with the following merits:
 
@@ -178,7 +178,7 @@ Interpretation: Two working points are shown as vertical lines in Config ACFSA v
 ## Acknowledgments:
 I thank my PI, Prof. Gili Bisker, for the scientific conversations and guidance that made this open-source project possible.
 I thank Minyeong Yoon and Prof. Soo-Yeon Cho for sharing key datasets and being essential partners in testing this open source on their data.
-I thank Mr. Gabriel Petersky and Dr. Verena Wulf for our scientific discussions and for coauthoring the paper on ACFSA [2].
+I thank Dr. Verena Wulf for our scientific discussions and for coauthoring the paper on ACFSA [2].
 Further acknowledgment goes to Dr. Srestha Basu, Ms. Shirel Kleiner, and Dr. Adi Neuman-Hendler for their support and scientific advice.
 
 ## References:
