@@ -1,5 +1,5 @@
 &lt;p align="center"&gt;
-  &lt;img src="TOC_Image.png" &gt;
+  &lt;img src="TOC_image.png" &gt;
 &lt;/p&gt;
 
 ## About:
