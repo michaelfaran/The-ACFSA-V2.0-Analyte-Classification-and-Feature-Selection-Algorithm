@@ -182,7 +182,9 @@ Interpretation: Two working points are shown as vertical lines in Config ACFSA v
 [2] Petresky, Gabriel, et al. "Metal-Ion Optical Fingerprinting Sensor Selection via an Analyte Classification and Feature Selection Algorithm." Analytical Chemistry 97.16 (2025): 8821-8832.  
 [3] Ledoit, Olivier, and Michael Wolf. "A Well-Conditioned Estimator for Large-Dimensional Covariance Matrices." Journal of Multivariate Analysis 88.2 (2004): 365–411.
 [4] Friedman, Jerome H. "Regularized Discriminant Analysis." Journal of the American Statistical Association 84.405 (1989): 165–175.
-[5] Lee, Yeon Soo, et al. "Spatiotemporal molecular tracing of ultralow-volume biofluids via a soft skin-adaptive optical monolithic patch sensor." Nature Communications 16.1 (2025): 3272.‏  
+
+[5] Lee, Yeon Soo, et al. "Spatiotemporal molecular tracing of ultralow-volume biofluids via a soft skin-adaptive optical monolithic patch sensor." Nature Communications 16.1 (2025): 3272.
+‏  
 [6] Yoon, Minyeong, et al. "Enzyme-free optical detection of uric acid using corona phase molecular recognition in near-infrared fluorescent single-walled carbon nanotubes." Nanoscale 17.17 (2025): 10652-10662.‏  
 
 The code uses adjusted versions of the following MATLAB codes:  
