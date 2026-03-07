@@ -7,7 +7,7 @@ This repository contains the code framework for ACFSA V2.0: Analyte Classificati
 
 It serves as an open source with a graphical user interface (GUI) for anyone interested in choosing a minimal sensor set out of analyte-sensor screening data, that preserves both accuracy and minimal sensor number- a key purpose in experiment design. While developing this GUI, we placed significant emphasis on user-friendliness and accessibility, aiming to make the repository straightforward to use for both experimentalists and computational researchers.
 
-The algorithm, with some key examples, appears in the upcoming paper  "Rational Selection of Minimal Sensor Arrays for Analyte Fingerprinting" by Michael Faran, Minyeong Yoon, Soo-Yeon Cho, and Gili Bisker [1]. The paper is now under revision [2].
+The algorithm, with some key examples, appears in the upcoming paper  "Rational Selection of Minimal Sensor Arrays for Analyte Fingerprinting" by Michael Faran, Minyeong Yoon, Soo-Yeon Cho, and Gili Bisker [1]. The paper is now under revision and extends and improves ACFSA V1.0, previously published [2].
 
 ACFSA V2.0 is an algorithm designed to identify the minimal subset of sensors from a larger screening array that still preserves reliable analyte classification. Starting from a full analyte–sensor measurement table, the algorithm iteratively removes sensors while monitoring classification performance, ultimately selecting the smallest subset that satisfies predefined error thresholds. The method is particularly well-suited for chemometrics problems with small sample datasets, where classical machine learning approaches may become unstable. To address this challenge, the algorithm incorporates several covariance stabilization strategies—variance inflation, Ledoit–Wolf shrinkage [3], and ridge regularization [4]—which improve robustness in both the classification stage and the feature-selection process.
 
@@ -22,13 +22,13 @@ The paper introduces ACFSA V2.0 as a practical tool for experimental design, wit
 
 Proven peformance:
 
-- **Builds on prior ACFSA** – Extends the original ACFSA framework [1].  
+- **Builds on prior ACFSA** – Extends the original ACFSA framework [2].  
 - **Validated on multiple datasets** – Demonstrated on:  
-  - Metal-ion SWCNT dataset [1]  
-  - Artificial datasets based on [1]  
+  - Metal-ion SWCNT dataset [2]  
+  - Artificial datasets based on [2]  
   - DNA-SWCNT sensors for sweat-related analytes [5]  
   - DNA-SWCNT sensors for urine analytes [6]  
-- **Supports alternative activation modes** – Benchmarked across different ACFSA V2.0 activation settings (see Ref. [2]).
+- **Supports alternative activation modes** – Benchmarked across different ACFSA V2.0 activation settings (see Ref. [1]).
 
 This code was written by Michael Faran, 16/11/2025, in MATLAB. 
 For any questions or inquiries, please email michaelfaran[at]gmail.com. 
