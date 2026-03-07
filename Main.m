@@ -5,13 +5,16 @@ function Main
 %   Step 2  – Configure ACFSA V2 options → calls:
 %             Main_to_Call_GUI(supertitle, inputs_mat, analyte_name_vec, sensor_name_vec, DAT, n_measure)
 %
-% inputs_mat = [inflateFlag, artificialSTDmultiplier, classifierFlag, weightedFSFlag, allowedErrWP1_pct, allowedErrWP2_pct]
+% UPDATED INPUT VECTOR:
+% inputs_mat = [inflateFlag, artificialSTDmultiplier, classifierFlag, weightedFSFlag, ...
+%               allowedErrWP1_pct, allowedErrWP2_pct, pc1VarThresh_pct]
 %   - inflateFlag:               0/1
 %   - artificialSTDmultiplier:   0 = no artificial dataset; >0 = STD×multiplier stress-test (must be ≥ 0)
 %   - classifierFlag:            0 = QDA, 1 = Voronoi
 %   - weightedFSFlag:            0/1
-%   - allowedErrWP1_pct:         working point 1, allowed classification error (%) per sensor in minimal dataset (default 3)
-%   - allowedErrWP2_pct:         working point 2, allowed classification error (%) per sensor in minimal dataset (default 0.5)
+%   - allowedErrWP1_pct:         working point 1, allowed classification error (%) per sensor in minimal dataset
+%   - allowedErrWP2_pct:         working point 2, allowed classification error (%) per sensor in minimal dataset
+%   - pc1VarThresh_pct:          threshold (%) above which PC1 is considered effectively 1D-dominant (default 95)
 
     % ---- Local state (for Step 2) ----
     DAT_local                 = [];
@@ -248,12 +251,12 @@ function Main
         end
 
         % ---- STEP 2 UI ----
-        fig2 = uifigure('Name','ACFSA V2: Configure & Run','Position',[120 120 800 520]);
+        fig2 = uifigure('Name','ACFSA V2: Configure & Run','Position',[120 120 820 580]);
 
-        % Layout for added working-point inputs + info text (no checkbox)
-        gl2 = uigridlayout(fig2,[9 2]);
-        gl2.RowHeight   = {38, 38, 38, 38, 38, 38, 38, 40, '1x'};
-        gl2.ColumnWidth = {360, '1x'};
+        % Added PC1 threshold row
+        gl2 = uigridlayout(fig2,[10 2]);
+        gl2.RowHeight   = {38, 38, 38, 38, 38, 38, 38, 38, 40, '1x'};
+        gl2.ColumnWidth = {390, '1x'};
 
         % Title
         uilabel(gl2,'Text','Dataset title (supertitle):','HorizontalAlignment','right');
@@ -276,24 +279,29 @@ function Main
         uilabel(gl2,'Text','Weighted feature selection? (0 = weighted, 1 = standard):','HorizontalAlignment','right');
         edtWeighted = uieditfield(gl2,'numeric','Limits',[0 1],'Value',1,'RoundFractionalValues','off');
 
-        % Working points – labels updated to say "per sensor"
+        % Working points
         uilabel(gl2,'Text','Allowed classification error per sensor (%) — Working point 1:','HorizontalAlignment','right');
         edtWP1 = uieditfield(gl2,'numeric','Limits',[0 100],'Value',0.5, ...
             'Tooltip','Working point 1: allowed classification error per sensor (%) in the minimal dataset.');
 
         uilabel(gl2,'Text','Allowed classification error per sensor (%) — Working point 2:','HorizontalAlignment','right');
         edtWP2 = uieditfield(gl2,'numeric','Limits',[0 100],'Value',3, ...
-            'Tooltip','Working point 2 (default): allowed classification error per sensor (%) in the minimal dataset.');
+            'Tooltip','Working point 2: allowed classification error per sensor (%) in the minimal dataset.');
 
-        % Informative note (no checkbox)
+        % NEW: PC1 threshold row
+        uilabel(gl2,'Text','PC1 EV threshold for 1D activation, put 100 to prevent (%):','HorizontalAlignment','right');
+        edtPC1Thresh = uieditfield(gl2,'numeric','Limits',[0 100],'Value',95, ...
+            'Tooltip','When PC1 explains at least this percentage of variance, the run flags the subset as effectively 1D-dominant. Put 100 to prevent 1D ACFSA Acitvation.');
+
+        % Informative note
         infoLbl = uilabel(gl2,'Text', ...
             'This GUI will be closed before running. Input parameters will be printed again at the end of the run.');
-        infoLbl.Layout.Row = 8; infoLbl.Layout.Column = [1 2];
+        infoLbl.Layout.Row = 9; infoLbl.Layout.Column = [1 2];
 
         % Run button
-        runRow = uigridlayout(gl2,[1 2]); runRow.Layout.Row = 9; runRow.Layout.Column = [1 2];
+        runRow = uigridlayout(gl2,[1 2]); runRow.Layout.Row = 10; runRow.Layout.Column = [1 2];
         btnRun = uibutton(runRow,'Text','Run ACFSA','FontWeight','bold','ButtonPushedFcn',@onRunACFSA);
-        uilabel(runRow,'Text',''); % filler
+        uilabel(runRow,'Text','');
 
         function onRunACFSA(~,~)
             supertitle = edtTitle.Value;
@@ -310,6 +318,7 @@ function Main
             wfs  = edtWeighted.Value;
             wp1  = edtWP1.Value;
             wp2  = edtWP2.Value;
+            pc1t = edtPC1Thresh.Value;
 
             if ~(isfinite(infl) && any(infl == [0 1]))
                 uialert(fig2,'Inflate flag must be exactly 0 or 1.','Input Error','Icon','warning'); return;
@@ -326,40 +335,42 @@ function Main
             if ~(isfinite(wp2) && wp2 >= 0 && wp2 <= 100)
                 uialert(fig2,'Working point 2 must be a percentage in [0, 100].','Input Error','Icon','warning'); return;
             end
+            if ~(isfinite(pc1t) && pc1t >= 0 && pc1t <= 100)
+                uialert(fig2,'PC1 variance threshold must be a percentage in [0, 100].','Input Error','Icon','warning'); return;
+            end
 
-            % Anchor classic figure (legacy plotting friendliness)
+            % Anchor classic figure
             anchorFig = figure('Visible','off','HandleVisibility','on','IntegerHandle','off', ...
                                'NumberTitle','off','Name','ACFSA-AnchorClassic');
             try, set(0,'CurrentFigure',anchorFig); catch, end
             drawnow;
 
-            % ALWAYS close the GUIs before running (no checkbox)
+            % ALWAYS close the GUIs before running
             try, if isvalid(fig2), delete(fig2); end, catch, end
             try, if isvalid(fig),  delete(fig);  end, catch, end
 
-            % Build inputs and run (6-D)
-            inputs_mat = double([infl, aSTD, clsf, wfs, wp1, wp2]); %#ok<NASGU>
+            % Build inputs and run
+            inputs_mat = double([infl, aSTD, clsf, wfs, wp1, wp2, pc1t]); %#ok<NASGU>
             input_vec  = inputs_mat; %#ok<NASGU>
 
             try
                 Main_to_Call_GUI(supertitle, inputs_mat, ...
                     analyte_name_vec_local, sensor_name_vec_local, DAT_local, n_measure_local);
 
-                % Print parameters to Command Window at end of run
                 fprintf('\n[ACFSA V2] Run completed.\n');
                 fprintf('Title: %s\n', supertitle);
                 fprintf('Inflate uncertainty: %g\n', infl);
                 fprintf('Artificial STD multiplier: %g\n', aSTD);
                 fprintf('Classifier: %s\n', tern(clsf==0,'QDA','Voronoi'));
-                fprintf('Weighted feature selection: %s\n', tern(wfs==1,'ON','OFF'));
+                fprintf('Weighted feature selection: %s\n', tern(wfs==0,'ON','OFF'));
                 fprintf('Allowed classification error per sensor (%%) — WP1: %.4g, WP2: %.4g\n', wp1, wp2);
+                fprintf('PC1 variance threshold for 1D-dominance (%%): %.4g\n', pc1t);
                 fprintf('Dataset: %d rows × %d sensors; analytes: %d; n_measure: %d\n', ...
                     size(DAT_local,1), size(DAT_local,2), numel(analyte_name_vec_local), n_measure_local);
             catch ME
-                % Even on error, print the chosen parameters for traceability
                 fprintf('\n[ACFSA V2] Run ERROR: %s\n', ME.message);
-                fprintf('Parameters were: Inflate=%g, aSTD=%g, Classifier=%s, WeightedFS=%s, WP1=%.4g%%, WP2=%.4g%%\n', ...
-                    infl, aSTD, tern(clsf==0,'QDA','Voronoi'), tern(wfs==1,'ON','OFF'), wp1, wp2);
+                fprintf('Parameters were: Inflate=%g, aSTD=%g, Classifier=%s, WeightedFS=%s, WP1=%.4g%%, WP2=%.4g%%, PC1Thresh=%.4g%%\n', ...
+                    infl, aSTD, tern(clsf==0,'QDA','Voronoi'), tern(wfs==0,'ON','OFF'), wp1, wp2, pc1t);
                 try, errordlg(ME.message,'Run Error'); end
             end
         end
@@ -377,7 +388,8 @@ function Main
             '• Each measurement row must contain one numeric value per sensor (row length = %d sensor columns).' ...
             '\n Notes:\n'...
             '• This algorithm assumes that the measurements are already normalized sensor responses.\n'...
-            '• The classification-error output and any synthetic dataset (if generated) assume that each analyte’s measurements follow a Gaussian distribution.'...
+            '• The classification-error output and any synthetic dataset (if generated) assume that each analyte’s measurements follow a Gaussian distribution.\n'...
+            '• In QDA mode, covariance estimation is regularized internally to improve stability in low-sample settings.'...
             ], M, S);
     end
 
@@ -434,7 +446,7 @@ function Main
             analyteAll(noCommaIdx) = strip(info.labelCol(noCommaIdx));
 
             [~, firstIdx] = unique(analyteAll,'stable');
-            info.analyte_name_vec = cellstr(analyteAll(sort(firstIdx)).');  % 1xA
+            info.analyte_name_vec = cellstr(analyteAll(sort(firstIdx)).');
 
             [grp,~] = grp2idx(analyteAll);
             info.counts = accumarray(grp,1);
@@ -509,7 +521,6 @@ function Main
                                           Mexp, strjoin(string(info.counts.'),', '));
         end
 
-        % --- Label-format check (unchanged) ---
         lbl = string(info.labelCol);
         lbl = regexprep(lbl, '[\x00-\x1F\x7F\xA0\u2000-\u200B\u2028\u2029\u202F\u205F\u3000]', ' ');
         lbl = regexprep(lbl, '\s+', ' ');
